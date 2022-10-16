@@ -1,4 +1,4 @@
-import { Task } from "../entities/Task";
+import { TaskEntity } from "../entities/TaskEntity";
 import { Arg, Int, Mutation, Query, Resolver } from "type-graphql";
 
 @Resolver()
@@ -8,34 +8,34 @@ export class TaskResolver {
     return "hello world";
   }
 
-  @Query(() => [Task])
-  allTasks(): Promise<Task[]> {
-    return Task.find({});
+  @Query(() => [TaskEntity])
+  allTaskEntitys(): Promise<TaskEntity[]> {
+    return TaskEntity.find({});
   }
 
-  @Query(() => Task, { nullable: true })
-  singleTask(
+  @Query(() => TaskEntity, { nullable: true })
+  singleTaskEntity(
     @Arg("id", () => Int)
     id: number
-  ): Promise<Task | null> {
-    return Task.findOne({ id });
+  ): Promise<TaskEntity | null> {
+    return TaskEntity.findOne({ id });
   }
 
-  @Mutation(() => Task)
-  async createTask(
+  @Mutation(() => TaskEntity)
+  async createTaskEntity(
     @Arg("title", () => String)
     title: string
-  ): Promise<Task> {
-    return await Task.create({ title, isComplete: false }).save();
+  ): Promise<TaskEntity> {
+    return await TaskEntity.create({ title, isComplete: false }).save();
   }
 
   @Mutation(() => Boolean)
-  deleteTask(
+  deleteTaskEntity(
     @Arg("id", () => Int)
     id: number
   ): boolean {
     try {
-      Task.delete({ id });
+      TaskEntity.delete({ id });
       return true;
     } catch (err) {
       return false;
@@ -43,19 +43,19 @@ export class TaskResolver {
   }
 
   @Mutation(() => Boolean, { nullable: true })
-  updateTask(
+  updateTaskEntity(
     @Arg("id", () => Int)
     id: number,
     @Arg("isComplete", () => Boolean)
     isComplete: boolean
   ): boolean | null {
-    const task = Task.findOne({ id });
+    const task = TaskEntity.findOne({ id });
     if (!task) {
       return null;
     }
 
     try {
-      Task.update({ id }, { isComplete });
+      TaskEntity.update({ id }, { isComplete });
       return true;
     } catch (err) {
       return false;

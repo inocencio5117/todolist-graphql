@@ -9,7 +9,7 @@ import {
 
 @Entity()
 @ObjectType()
-export class Task extends BaseEntity {
+export class TaskEntity extends BaseEntity {
   @PrimaryGeneratedColumn()
   @Field(() => Int)
   id: number;

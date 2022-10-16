@@ -3,24 +3,24 @@ import express, { Express } from "express";
 import { ApolloServer } from "apollo-server-express";
 import { buildSchema } from "type-graphql";
 
-// import { DataSource } from "typeorm";
+import { DataSource } from "typeorm";
 
 import { TaskResolver } from "./resolvers/task";
 import { ApolloServerPluginLandingPageGraphQLPlayground } from "apollo-server-core/dist/plugin/landingPage/graphqlPlayground";
-// import { Task } from "./entities/Task";
+import { TaskEntity } from "./entities/TaskEntity";
 
 const main = async () => {
-  // const conn = new DataSource({
-  //   type: "postgres",
-  //   database: "todolist-graphql-db",
-  //   entities: [Task],
-  //   synchronize: true,
-  //   username: "postgres",
-  //   password: "postgres",
-  //   port: 5432,
-  // });
+  const conn = new DataSource({
+    type: "postgres",
+    database: "api_gql-postgres-db-1",
+    entities: [TaskEntity],
+    synchronize: true,
+    username: "postgres",
+    password: "postgres",
+    port: 5432,
+  });
 
-  // await conn.initialize();
+  await conn.initialize();
 
   const apolloServer = new ApolloServer({
     schema: await buildSchema({
